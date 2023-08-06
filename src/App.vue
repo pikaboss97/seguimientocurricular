@@ -1,16 +1,43 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="FIIS logo" src="https://fiis.unas.edu.pe/sites/all/themes/business_responsive_theme/logo.png">
+  <Record :code=code />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Record from './components/Record.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Record
+  },
+  data(){
+    return {
+      code:""
+    }
+
+  },
+  created() {
+    const params = this.getURLParams();
+    this.code = params.code;
+  },
+  methods: {
+    getURLParams() {
+      const url = window.location.href;
+      const params = {};
+      const queryString = url.split("?")[1];
+      if (queryString) {
+        const keyValuePairs = queryString.split("&");
+        keyValuePairs.forEach(keyValuePair => {
+          const [key, value] = keyValuePair.split("=");
+          params[key] = decodeURIComponent(value);
+        });
+      }
+
+      return params;
+    },
   }
+
 }
 </script>
 
